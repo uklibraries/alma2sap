@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use File::Basename;
+use File::Slurp;
+
+my $hostname = `hostname`;
+my $this_day = `date`;
+
+use Email::Simple;
+use Email::Simple::Creator;
+use Email::Sender::Simple qw(sendmail);
+
+my $subject = $ARGV[0];
+my $body_file = $ARGV[1];
+my $body = '';
+if (-f $body_file) {
+    my $basename = basename($body_file);
+    if ($basename =~ /^[\d_]+\.report\.txt$/) {
+        $body = read_file($body_file);
+    }
+    else {
+        exit;
+    }
+}
+if (length($body) == 0) {
+    exit;
+}
+
+my @recipients = (
+    'somebody@invalid.invalid',
+    'somebody-else@invalid.invalid',
+);
+
+my $email = Email::Simple->create(
+    header => [
+        From => "alma2sap\@$hostname",
+        To => join(', ', @recipients),
+        Subject => $subject,
+    ],
+    body => $body,
+);
+sendmail($email);
+
