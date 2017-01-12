@@ -30,3 +30,7 @@ runner:
 ```
 
 The scripts in this package are in the public domain.  See LICENSE for details.
+
+Brief overview:
+
+* [https://scdp.uky.edu/mps/talks/2017-01-12/alma2sap/#/](https://scdp.uky.edu/mps/talks/2017-01-12/alma2sap/#/)
